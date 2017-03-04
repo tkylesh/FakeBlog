@@ -11,6 +11,8 @@ namespace FakeBlog.Models
         [Key]
         public int AuthorId { get; set; }
 
+        public ApplicationUser BaseUser { get; set; }
+
         public ICollection<Post> AuthorPosts { get; set; }
         public ICollection<Draft> AuthorDrafts { get; set; }
     }
