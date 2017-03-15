@@ -11,7 +11,7 @@ namespace FakeBlog.DAL
     {
         //List of methods to help deliver features
         //Create
-        void AddPost(Post post);
+        void AddPost(string Title, Author author, string body, bool IsDraft);
 
         //Read
         Post GetPost(int postId);
