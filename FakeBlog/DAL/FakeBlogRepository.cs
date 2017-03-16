@@ -28,27 +28,59 @@ namespace FakeBlog.DAL
 
         public bool Edit(int postId, string body)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                Post found_post = GetPost(postId);
+                found_post.Body = body;
+                found_post.Edited = true;
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
 
         public Post GetPost(int postId)
         {
-            throw new NotImplementedException();
+            Post found_post = _context.Posts.FirstOrDefault(p => p.PostId == postId);
+            return found_post;
         }
 
-        public List<Post> GetPostFromAuthor(int authorId)
+        public List<Post> GetPostFromAuthor(string authorId)
         {
-            throw new NotImplementedException();
+            return _context.Posts.Where(p => p.Author.Id == authorId).ToList();
         }
 
         public bool Publish(int postId)
         {
-            throw new NotImplementedException();
+            Post found_post = GetPost(postId);
+
+            //if is draft
+            if(found_post.IsDraft)
+            { 
+                found_post.IsDraft = false;
+                found_post.PublishedAt = DateTime.Now;
+                _context.SaveChanges();
+                return true;
+            }
+            //if already published or not draft
+            return false;
         }
 
         public bool RemovePost(int postId)
         {
-            throw new NotImplementedException();
+            Post found_post = GetPost(postId);
+            if(found_post != null)
+            {
+                _context.Posts.Remove(found_post);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

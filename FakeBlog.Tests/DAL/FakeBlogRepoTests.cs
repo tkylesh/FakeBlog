@@ -48,6 +48,7 @@ namespace FakeBlog.Tests.DAL
 
             mock_posts_set.Setup(b => b.Remove(It.IsAny<Post>())).Callback((Post post) => fake_post_table.Remove(post));
 
+
             fake_context.Setup(c => c.Posts).Returns(mock_posts_set.Object); // Context.Boards returns fake_board_table (a list)
         }
 
@@ -95,6 +96,119 @@ namespace FakeBlog.Tests.DAL
 
             //Assert
             Assert.AreEqual(1, repo._context.Posts.Count());
+        }
+
+
+        [TestMethod]
+        public void EnsureICanReturnPosts()
+        {
+            //Arrange
+            fake_post_table.Add(new Post { Title="My Post"});
+
+            CreateFakeDatabase();
+
+            //Act
+            int expected_board_count = 1;
+            int actual_board_count = repo._context.Posts.Count();
+
+
+            //Assert
+            Assert.AreEqual(expected_board_count, actual_board_count);
+        }
+
+        [TestMethod]
+        public void EnsureICanGetPost()
+        {
+            //Arrange
+            fake_post_table.Add(new Post { PostId = 1, Title="My Post"});
+            CreateFakeDatabase();
+
+            //Act
+            string expected_post_title = "My Post";
+            Post actual_post = repo.GetPost(1);
+            string actual_post_title = repo.GetPost(1).Title;
+
+
+            //Assert
+            Assert.IsNotNull(actual_post);
+            Assert.AreEqual(expected_post_title, actual_post_title);
+        }
+
+        [TestMethod]
+        public void EnsureICanGetPostsFromAuthor()
+        {
+            //Arrange
+            //populate post table with posts
+            fake_post_table.Add(new Post { PostId = 1, Title = "MyBoard", Author = sally });
+            fake_post_table.Add(new Post { PostId = 2, Title = "MyBoard", Author = sally });
+            fake_post_table.Add(new Post { PostId = 3, Title = "MyBoard", Author = sammy });
+            CreateFakeDatabase();
+
+            //Act
+            int expected_post_count = 2;
+            int actual_post_count = repo.GetPostFromAuthor(sally.Id).Count();
+
+            //Assert
+            Assert.AreEqual(expected_post_count, actual_post_count);
+        }
+
+        [TestMethod]
+        public void EnsureICanRemovePost()
+        {
+            //Arrange
+            //populate post table with posts
+            fake_post_table.Add(new Post { PostId = 1, Title = "MyBoard", Author = sally });
+            fake_post_table.Add(new Post { PostId = 2, Title = "MyBoard", Author = sally });
+            fake_post_table.Add(new Post { PostId = 3, Title = "MyBoard", Author = sammy });
+            CreateFakeDatabase();
+
+            //Act
+            int expected_post_count = 2;
+            repo.RemovePost(3);
+            int actual_post_count = repo._context.Posts.Count();
+
+            //Assert
+            Assert.AreEqual(expected_post_count, actual_post_count);
+        }
+
+        [TestMethod]
+        public void EnsureICanPublishPost()
+        {
+            //Arrange
+            fake_post_table.Add(new Post { PostId = 1, Title = "MyBoard", IsDraft=true, Author = sally });
+            fake_post_table.Add(new Post { PostId = 2, Title = "MyBoard", IsDraft=true, Author = sally });
+            fake_post_table.Add(new Post { PostId = 3, Title = "MyBoard", IsDraft=true, Author = sammy });
+            CreateFakeDatabase();
+
+            //Act
+            int expected_post_count = 1;
+            repo.Publish(1);
+            int actual_post_count = repo._context.Posts.Where(p => p.IsDraft == false).Count();
+            Post publishedPost = repo.GetPost(1);
+
+            //Assert
+            Assert.IsNotNull(publishedPost.PublishedAt);
+            Assert.AreEqual(expected_post_count, actual_post_count);
+        }
+
+        [TestMethod]
+        public void EnsureICanEditPost()
+        {
+            //Arrange
+            fake_post_table.Add(new Post { PostId = 1, Title = "MyBoard", IsDraft = true, Author = sally });
+            fake_post_table.Add(new Post { PostId = 2, Title = "MyBoard", IsDraft = true, Author = sally });
+            fake_post_table.Add(new Post { PostId = 3, Title = "MyBoard", IsDraft = true, Author = sammy });
+            CreateFakeDatabase();
+
+            //Act
+            int expected_post_count = 1;
+            repo.Edit(1, "My test of edit post method.");
+            int actual_post_count = repo._context.Posts.Where(p => p.Edited== true).Count();
+            Post editedPost = repo.GetPost(1);
+
+            //Assert
+            Assert.IsNotNull(editedPost.Body);
+            Assert.AreEqual(expected_post_count, actual_post_count);
         }
 
 

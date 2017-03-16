@@ -190,6 +190,10 @@
     <Compile Include="Migrations\201703152226584_InitialDatabase.Designer.cs">
       <DependentUpon>201703152226584_InitialDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703161524448_RemovedAuthor.cs" />
+    <Compile Include="Migrations\201703161524448_RemovedAuthor.Designer.cs">
+      <DependentUpon>201703161524448_RemovedAuthor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -268,6 +272,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201703152226584_InitialDatabase.resx">
       <DependentUpon>201703152226584_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161524448_RemovedAuthor.resx">
+      <DependentUpon>201703161524448_RemovedAuthor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -15,7 +15,7 @@ namespace FakeBlog.DAL
 
         //Read
         Post GetPost(int postId);
-        List<Post> GetPostFromAuthor(int authorId);
+        List<Post> GetPostFromAuthor(string authorId);
 
         //Update
         bool Publish(int postId);
