@@ -8,9 +8,22 @@ namespace FakeBlog.DAL
 {
     public class FakeBlogRepository : IRepository
     {
-        public void AddPost(string Title, Author author, string body, bool IsDraft)
+        public FakeBlogContext _context { get; set; }
+
+        public FakeBlogRepository()
         {
-            throw new NotImplementedException();
+            _context = new FakeBlogContext();
+        }
+
+        public FakeBlogRepository(FakeBlogContext context)
+        {
+            _context = context;
+        }
+        public void AddPost(string Title, ApplicationUser author, string body, bool IsDraft)
+        {
+            Post post = new Post { Title = Title, Author = author, Body = body, IsDraft = IsDraft};
+            _context.Posts.Add(post);
+            _context.SaveChanges();
         }
 
         public bool Edit(int postId, string body)
