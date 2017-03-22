@@ -12,7 +12,7 @@ using System.Data;
 
 namespace FakeBlog.DAL.Repository
 {
-    public class FakeBlogRepository : IRepository
+    public class FakeBlogRepository : ICreateDeletePosts, IReadPosts, IUpdatePosts
     {
         //public FakeBlogContext _context { get; set; }
         IDbConnection _blogConnection;
@@ -24,15 +24,9 @@ namespace FakeBlog.DAL.Repository
             _blogConnection = blogConnection;
         }
 
-        //public FakeBlogRepository(FakeBlogContext context)
-        //{
-        //    _context = context;
-        //}
+
         public void AddPost(string Title, string author_Id, string body, bool IsDraft)
         {
-            //Post post = new Post { Title = Title, Author = author, Body = body, IsDraft = IsDraft};
-            //_context.Posts.Add(post);
-            //_context.SaveChanges();
 
             //open connection
             _blogConnection.Open();
@@ -72,19 +66,6 @@ namespace FakeBlog.DAL.Repository
 
         public bool Edit(int postId, string body)
         {
-            //try
-            //{
-
-            //    Post found_post = GetPost(postId);
-            //    found_post.Body = body;
-            //    found_post.Edited = true;
-            //    _context.SaveChanges();
-            //    return true;
-            //}
-            //catch
-            //{
-            //    return false;
-            //}
 
             _blogConnection.Open();
 
@@ -123,8 +104,6 @@ namespace FakeBlog.DAL.Repository
 
         public Post GetPost(int postId)
         {
-            //Post found_post = _context.Posts.FirstOrDefault(p => p.PostId == postId);
-            //return found_post;
 
             _blogConnection.Open();
 
@@ -172,7 +151,6 @@ namespace FakeBlog.DAL.Repository
 
         public List<Post> GetPostFromAuthor(string authorId)
         {
-            //return _context.Posts.Where(p => p.Author.Id == authorId).ToList();
             _blogConnection.Open();
 
             try
@@ -220,19 +198,6 @@ namespace FakeBlog.DAL.Repository
 
         public bool Publish(int postId)
         {
-            //Post found_post = GetPost(postId);
-
-            //if is draft
-            //if(found_post.IsDraft)
-            //{ 
-            //    found_post.IsDraft = false;
-            //    found_post.PublishedAt = DateTime.Now;
-            //    _context.SaveChanges();
-            //    return true;
-            //}
-            //if already published or not draft
-            //return false;
-
             _blogConnection.Open();
 
             try
@@ -266,14 +231,7 @@ namespace FakeBlog.DAL.Repository
 
         public bool RemovePost(int postId)
         {
-            //Post found_post = GetPost(postId);
-            //if(found_post != null)
-            //{
-            //    _context.Posts.Remove(found_post);
-            //    _context.SaveChanges();
-            //    return true;
-            //}
-            //return false;
+
             _blogConnection.Open();
 
             try
