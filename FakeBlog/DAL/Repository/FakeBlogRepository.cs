@@ -6,18 +6,22 @@ using FakeBlog.Models;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Diagnostics;
+using FakeBlog.Controllers.Contracts;
+using System.Data.Common;
+using System.Data;
 
-namespace FakeBlog.DAL
+namespace FakeBlog.DAL.Repository
 {
     public class FakeBlogRepository : IRepository
     {
         //public FakeBlogContext _context { get; set; }
-        SqlConnection _blogConnection;
+        IDbConnection _blogConnection;
 
-        public FakeBlogRepository()
+        public FakeBlogRepository(IDbConnection blogConnection)
         {
             //_context = new FakeBlogContext();
-            _blogConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            //_blogConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+            _blogConnection = blogConnection;
         }
 
         //public FakeBlogRepository(FakeBlogContext context)

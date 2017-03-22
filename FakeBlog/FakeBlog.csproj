@@ -181,8 +181,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DAL\FakeBlogContext.cs" />
-    <Compile Include="DAL\FakeBlogRepository.cs" />
-    <Compile Include="DAL\IRepository.cs" />
+    <Compile Include="DAL\Repository\FakeBlogRepository.cs" />
+    <Compile Include="Controllers\Contracts\IRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
