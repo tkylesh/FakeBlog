@@ -12,7 +12,7 @@ using System.Data;
 
 namespace FakeBlog.DAL.Repository
 {
-    public class FakeBlogCreateDeleteRepository : ICreateDeletePosts, IReadPosts, IUpdatePosts
+    public class FakeBlogCreateDeleteRepository : ICreateDeletePosts
     {
         //public FakeBlogContext _context { get; set; }
         IDbConnection _blogConnection;
