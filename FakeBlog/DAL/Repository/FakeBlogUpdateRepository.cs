@@ -21,7 +21,7 @@ namespace FakeBlog.DAL.Repository
             _blogConnection = blogConnection;
         }
         public bool Publish(int postId)
-        {
+        {` 
             _blogConnection.Open();
 
             try

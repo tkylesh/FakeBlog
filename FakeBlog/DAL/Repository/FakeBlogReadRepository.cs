@@ -40,6 +40,7 @@ namespace FakeBlog.DAL.Repository
                 var reader = getPostCommand.ExecuteReader();
 
                 //reads one row at a time
+                //use a while loop to return multiple results
                 if (reader.Read())
                 {
                     var post = new Post()
